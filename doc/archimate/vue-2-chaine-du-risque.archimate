@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archimate:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:archimate="http://www.archimatetool.com/archimate" name="TP-ADR-Bartil-Haddani - Vue 2 Chaine du risque" id="id-model-risque" version="5.0.0">
+  <folder name="Strategy" id="id-f-strategy" type="strategy"/>
+  <folder name="Business" id="id-f-business" type="business">
+    <element xsi:type="archimate:BusinessEvent" name="Usurpation de session par rejeu de jeton" id="id-threat" profiles="id-prof-threat"/>
+  </folder>
+  <folder name="Application" id="id-f-app" type="application">
+    <element xsi:type="archimate:ApplicationService" name="Authentification et autorisation" id="id-control-measure"/>
+  </folder>
+  <folder name="Technology &amp; Physical" id="id-f-tech" type="technology"/>
+  <folder name="Motivation" id="id-f-motiv" type="motivation">
+    <element xsi:type="archimate:Assessment" name="Jeton d'acces vole ou rejouable (authentification faible)" id="id-vuln" profiles="id-prof-vuln"/>
+    <element xsi:type="archimate:Assessment" name="Acces non autorise aux donnees personnelles des lecteurs" id="id-risk" profiles="id-prof-risk"/>
+    <element xsi:type="archimate:Goal" name="Garantir la confidentialite et l'integrite des donnees des lecteurs" id="id-control-objective"/>
+  </folder>
+  <folder name="Implementation &amp; Migration" id="id-f-impl" type="implementation_migration"/>
+  <folder name="Other" id="id-f-other" type="other"/>
+  <folder name="Relations" id="id-f-rel" type="relations">
+    <element xsi:type="archimate:AssociationRelationship" id="id-r1" name="est exploitee par" source="id-vuln" target="id-threat" directed="true"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-r2" name="engendre" source="id-threat" target="id-risk" directed="true"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-r3" name="est attenue par" source="id-risk" target="id-control-measure" directed="true"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-r4" name="realise" source="id-control-measure" target="id-control-objective"/>
+  </folder>
+  <folder name="Views" id="id-f-views" type="diagrams">
+    <element xsi:type="archimate:ArchimateDiagramModel" name="Vue 2 - Chaine du risque (ADR 003)" id="id-view2">
+      <child xsi:type="archimate:DiagramObject" id="id-d-vuln" archimateElement="id-vuln">
+        <bounds x="24" y="108" width="170" height="80"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c1" source="id-d-vuln" target="id-d-threat" archimateRelationship="id-r1"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-d-threat" archimateElement="id-threat">
+        <bounds x="244" y="108" width="170" height="80"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c2" source="id-d-threat" target="id-d-risk" archimateRelationship="id-r2"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-d-risk" archimateElement="id-risk">
+        <bounds x="464" y="108" width="170" height="80"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c3" source="id-d-risk" target="id-d-cm" archimateRelationship="id-r3"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-d-cm" archimateElement="id-control-measure">
+        <bounds x="684" y="108" width="170" height="80"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c4" source="id-d-cm" target="id-d-co" archimateRelationship="id-r4"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-d-co" archimateElement="id-control-objective">
+        <bounds x="904" y="108" width="170" height="80"/>
+      </child>
+    </element>
+  </folder>
+  <purpose>Chaine du risque (Risk and Security Overlay, Open Group W150) pour la decision ADR 003 : Authentification et autorisation. Specialisations a creer dans Archi : Vulnerability et Risk (Assessment), Threat Event (Business Event).</purpose>
+  <profile name="Vulnerability" id="id-prof-vuln" conceptType="Assessment"/>
+  <profile name="Threat Event" id="id-prof-threat" conceptType="BusinessEvent"/>
+  <profile name="Risk" id="id-prof-risk" conceptType="Assessment"/>
+</archimate:model>
