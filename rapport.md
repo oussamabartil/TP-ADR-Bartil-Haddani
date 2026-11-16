@@ -43,4 +43,31 @@ Enfin, ces deux sections permettent de juger la decision apres coup : on peut ve
 - **Failles de securite** : une decision de securite non documentee (ADR 003 sur l'authentification) peut etre modifiee ou retiree sans que l'on mesure le risque, ce qui ouvre des vulnerabilites.
 - **Documentation qui diverge** : si les ADR, les vues ArchiMate et le code ne sont pas coherents, la documentation n'est plus fiable et plus personne ne l'utilise.
 
-<!-- PARTIE 5 : analyse et discussion : a completer (binome) -->
+## Partie 5 : Analyse et discussion
+
+### 1. Avantages et limites des ADR pour notre projet
+
+**Avantages**
+- Les 5 decisions (base de donnees, architecture, securite, notifications, transactions) sont ecrites avec leurs alternatives et leurs consequences, et liees entre elles. On voit par exemple que l'ADR 005 depend de l'ADR 001 et conditionne l'ADR 004.
+- Les ADR sont versionnes dans Git, avec un commit par decision, donc l'historique est clair.
+- Le hook de validation garantit que tous les ADR suivent le meme format.
+- Les vues ArchiMate reprennent les noms et les decisions des ADR, ce qui donne de la tracabilite entre les deux formes de documentation.
+
+**Limites**
+- Le hook verifie la forme (sections, statut), pas la qualite du contenu : un ADR peut etre conforme et pourtant pauvre.
+- Il faut maintenir ensemble les ADR, les vues ArchiMate et le code. Rien ne verifie automatiquement qu'ils restent coherents.
+- Le hook local peut etre contourne (`git commit --no-verify`).
+- Le template ne contient ni date, ni auteur, ni champ « remplace par », ce qui limite le suivi dans le temps.
+- Pour un petit projet, rediger 5 ADR demande un effort non negligeable par rapport au gain immediat.
+
+### 2. Automatiser la gestion des ADR
+
+- **Integration continue** : une GitHub Action qui lance `scripts/check-adr.sh` a chaque push et pull request, pour rattraper les commits qui contournent le hook.
+- **Verification des liens** : un script qui controle que chaque lien vers un autre ADR pointe vers un fichier existant.
+- **Sommaire automatique** : un script qui genere la liste des ADR (numero, titre, statut) dans le README.
+- **Bot GitHub** : un bot qui commente la pull request quand le format est incorrect, qui propose le prochain numero d'ADR disponible, et qui rappelle de creer un ADR quand une modification touche l'architecture.
+- **Coherence ADR / ArchiMate** : un script qui compare la phrase de decision d'un ADR avec le Requirement correspondant de la vue.
+
+### 3. Amelioration du processus de redaction
+
+Nous proposerions de passer par une **pull request pour chaque nouvel ADR**, avec le statut `En discussion` pendant la revue. L'ADR passe a `Accepte` au moment de la fusion, une fois relu par l'autre membre du binome. Cela evite d'accepter une decision que personne n'a challengee. On ajouterait aussi au template une **date**, un **auteur** et un champ **« Remplace / Remplace par »** pour suivre l'evolution des decisions.
