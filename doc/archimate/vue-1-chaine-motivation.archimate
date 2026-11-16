@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archimate:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:archimate="http://www.archimatetool.com/archimate" name="TP-ADR-Bartil-Haddani - Vue 1 Chaine de motivation" id="id-model-motivation" version="5.0.0">
+  <folder name="Strategy" id="id-f-strategy" type="strategy"/>
+  <folder name="Business" id="id-f-business" type="business"/>
+  <folder name="Application" id="id-f-app" type="application">
+    <element xsi:type="archimate:ApplicationComponent" name="Module Notifications" id="id-component"/>
+  </folder>
+  <folder name="Technology &amp; Physical" id="id-f-tech" type="technology"/>
+  <folder name="Motivation" id="id-f-motiv" type="motivation">
+    <element xsi:type="archimate:Driver" name="Les services d'envoi (SMTP, SMS) peuvent etre lents ou indisponibles" id="id-driver"/>
+    <element xsi:type="archimate:Goal" name="Garantir des emprunts rapides et des notifications fiables" id="id-goal"/>
+    <element xsi:type="archimate:Requirement" name="Envoyer les notifications de maniere asynchrone via une file de messages (RabbitMQ), avec le pattern Outbox" id="id-requirement"/>
+  </folder>
+  <folder name="Implementation &amp; Migration" id="id-f-impl" type="implementation_migration"/>
+  <folder name="Other" id="id-f-other" type="other"/>
+  <folder name="Relations" id="id-f-rel" type="relations">
+    <element xsi:type="archimate:InfluenceRelationship" name="motive" id="id-r1" source="id-driver" target="id-goal"/>
+    <element xsi:type="archimate:RealizationRelationship" name="realise" id="id-r2" source="id-requirement" target="id-goal"/>
+    <element xsi:type="archimate:RealizationRelationship" name="realise" id="id-r3" source="id-component" target="id-requirement"/>
+  </folder>
+  <folder name="Views" id="id-f-views" type="diagrams">
+    <element xsi:type="archimate:ArchimateDiagramModel" name="Vue 1 - Chaine de motivation (ADR 004)" id="id-view1">
+      <child xsi:type="archimate:DiagramObject" id="id-d-driver" archimateElement="id-driver">
+        <bounds x="516" y="36" width="320" height="80"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c1" source="id-d-driver" target="id-d-goal" archimateRelationship="id-r1"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-d-goal" targetConnections="id-c1 id-c2" archimateElement="id-goal">
+        <bounds x="36" y="60" width="320" height="80"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-d-requirement" targetConnections="id-c3" archimateElement="id-requirement">
+        <bounds x="48" y="204" width="320" height="80"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c2" source="id-d-requirement" target="id-d-goal" archimateRelationship="id-r2"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-d-component" archimateElement="id-component">
+        <bounds x="504" y="204" width="320" height="80"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c3" source="id-d-component" target="id-d-requirement" archimateRelationship="id-r3"/>
+      </child>
+    </element>
+  </folder>
+  <purpose>Chaine de motivation (Driver, Goal, Requirement, Application Component) pour la decision ADR 004 : Notifications asynchrones. Le Requirement reprend mot pour mot la decision de l'ADR.</purpose>
+</archimate:model>
