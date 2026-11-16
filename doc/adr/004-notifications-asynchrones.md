@@ -10,7 +10,7 @@ Le systeme doit prevenir les lecteurs (confirmation d'emprunt, rappel de date de
 
 ## Decision
 
-Envoyer les notifications de maniere **asynchrone** via une **file de messages (RabbitMQ)**, avec le **pattern Outbox** :
+Envoyer les notifications de maniere asynchrone via une file de messages (RabbitMQ), avec le pattern Outbox :
 
 - le module Emprunts ou Reservations enregistre l'evenement dans une table `outbox` de la base PostgreSQL, dans la meme transaction que l'operation metier ;
 - un processus d'arriere-plan publie les evenements de la table `outbox` dans la file ;
