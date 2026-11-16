@@ -1,6 +1,6 @@
 # Rapport TD2 - ADR et vues ArchiMate
 
-Binome : Oussama Bartil / (nom de la binome)
+Binome : Oussama Bartil / Haddani
 
 ## Partie 1 : Etude theorique
 
